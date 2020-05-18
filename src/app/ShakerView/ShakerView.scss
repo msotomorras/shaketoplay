@@ -1,0 +1,27 @@
+.ShakerView {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #cfe4ad;
+
+    .buttonshaker {
+        color: white;
+        font-weight: bold;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .maracas {
+            width: 50px;
+            height: auto;
+        }
+    }
+    
+}
