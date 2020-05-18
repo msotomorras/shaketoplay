@@ -53,8 +53,9 @@ export const ShakerView = () => {
 
             <div className='buttonshaker' disabled={!isLoaded} onClick={() => handleClick()}>
                 PLAY MARACAS
-          <br />
+                <br />
                 <img className='maracas' src={maracasImg} alt="Logo" />
+                <AwesomeComponent/>
             </div>
         </div>
     );
