@@ -61,6 +61,7 @@ export const ShakerView = () => {
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
         setAccelerated(true)
+        playMaracas()
     }
 
     const isAccelerometer = () => {

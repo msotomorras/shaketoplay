@@ -17,13 +17,14 @@
         padding: 2rem;
         border-radius: 70px;
         // box-shadow: 8px 10px #ff7b7b;
-        box-shadow: 0 9px #ff7b7b;
+        box-shadow: 0 19px #ff8d8d;
         color: white;
         font-weight: bold;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-bottom: 12rem;
 
         &:hover {
             // background-color: #ffc1c1;
@@ -39,7 +40,7 @@
     .buttonshaker:active {
         background-color: #fa4659;
         box-shadow: 0 5px #ff7b7b;
-        transform: translateY(4px);
+        transform: translateY(14px);
     }
 
     .motion-permissions {
