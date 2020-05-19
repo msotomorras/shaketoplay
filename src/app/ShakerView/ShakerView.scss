@@ -16,29 +16,42 @@
         background: #fa4659;
         padding: 2rem;
         border-radius: 70px;
-        box-shadow: 8px 10px #ffbfbf;
+        // box-shadow: 8px 10px #ff7b7b;
+        box-shadow: 0 9px #ff7b7b;
         color: white;
         font-weight: bold;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        &:hover {
+            // background-color: #ffc1c1;
+        }
         .maracas {
+            margin-top: .5rem;
             width: 50px;
             height: auto;
         }
+    }
+    
+
+    .buttonshaker:active {
+        background-color: #fa4659;
+        box-shadow: 0 5px #ff7b7b;
+        transform: translateY(4px);
     }
 
     .motion-permissions {
         font-size: .7rem;
         position: absolute;
-        bottom: 20%;
+        bottom: 10%;
         width: 50%;
 
         .permissions-button {
             padding: 17px;
             margin-top: 1rem;
-            background: #d7ffd6;
+            background: #dcf1e3;
         }
     }
     
