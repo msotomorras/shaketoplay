@@ -12,6 +12,7 @@ export const ShakerView = () => {
     const sampler = useRef(null);
     const [accelerated, setAccelerated] = useState(true)
     const [buttonClicked, setButtonClicked] = useState(false)
+    const [showModal, setShowModal] = useState(true)
 
 
     useEffect(() => {
@@ -43,20 +44,36 @@ export const ShakerView = () => {
         }
     }
 
-    const askOrientationPermissions = () => {
-        // feature detect
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            console.log('request permission')
-            DeviceOrientationEvent.requestPermission()
-                .then(permissionState => {
-                    if (permissionState === 'granted') {
-                        window.addEventListener('deviceorientation', () => { });
-                    }
-                })
-                .catch(console.error);
-        } else {
-            // handle regular non iOS 13+ devices
-        }
+    const handleGivePermissions = () => {
+
+    }
+
+    const renderModal2 = () => {
+        return (
+            <div className='modal-container'>
+                <div className='ModalPermissions'>
+                    If you want to make your ryhthm while shaking your body and your phone...
+            <div className='permissions-button' onClick={() => {askMotionPermissions(); setShowModal(false)}}>
+                        Give Motion Permissions
+            </div>
+                    <div className='permissions-button' onClick={() => setShowModal(false)}>
+                        I have an android, or I'll just play with the button
+            </div>
+                </div>
+            </div>
+
+        )
+    }
+
+    const renderModal = () => {
+        return (
+            <div className='motion-permissions'>
+                If you want to make your ryhthm while shaking your body and your phone...
+            <div className='permissions-button' onClick={() => askMotionPermissions()}>
+                    Give Motion Permissions
+            </div>
+            </div>
+        )
     }
 
     const handleAccelerated = (aX, aY, aZ) => {
@@ -67,7 +84,7 @@ export const ShakerView = () => {
         // setTimeout(() => { 
         //     setAccelerated(false)
         // }, 100);
-        
+
     }
 
     const isAccelerometer = () => {
@@ -90,12 +107,12 @@ export const ShakerView = () => {
         if (aY > 14) handleAccelerated(aX, aY, aZ)
     }
 
-    
+
     const handleClick = () => {
         playMaracas()
         setButtonClicked(true)
         // setButtonClicked(false)
-        setTimeout(() => { 
+        setTimeout(() => {
             setButtonClicked(false)
         }, 100);
     }
@@ -109,12 +126,7 @@ export const ShakerView = () => {
                 <br />
                 <img className='maracas' src={maracasImg} alt="Logo" />
             </div>
-            <div className='motion-permissions'>
-                If you want to make your ryhthm while shaking your body and your phone...
-            <div className='permissions-button' onClick={() => askMotionPermissions()}>
-                    Give Motion Permissions
-            </div>
-            </div>
+            {showModal && renderModal2()}
         </div>
     );
 };

@@ -51,6 +51,42 @@
     //     transform: translateY(14px);
     // }
 
+    .modal-container {
+        background: rgba(2, 2, 2, 0.37);
+        display: flex;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        justify-content: center;
+        align-items: center;
+        .ModalPermissions {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            position: absolute;
+           font-size: .75rem;
+           margin-bottom: 9rem;
+            width: 50%;
+            text-align: left;
+            max-width: 13rem;
+            // max-height: 120px;
+            .permissions-button {
+                padding: 17px;
+                margin-top: 1rem;
+                background: #70c08a;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+                color: white;
+                font-weight: 500;
+            }
+        }
+    }
+    
+
     .motion-permissions {
         font-size: .7rem;
         position: absolute;
