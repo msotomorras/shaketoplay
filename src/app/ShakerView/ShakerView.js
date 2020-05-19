@@ -22,7 +22,7 @@ export const ShakerView = () => {
             }
         ).toMaster();
         // askPermissions()
-        // isAccelerometer()
+        isAccelerometer()
     }, []);
 
     const askMotionPermissions = () => {
