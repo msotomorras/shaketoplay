@@ -7,29 +7,6 @@ import maracasImg from '../../assets/maracas1.png';
 
 import './ShakerView.scss';
 
-/* Combining React-Accelerometer with React-Motion */
-// const ReactAccelerometerMotion = ({ children }) => (
-//     <ReactAccelerometer>
-//         {({ x, y }) => (
-//             <Motion style={{ x: spring(x), y: spring(y) }}>
-//                 {pos => children(pos)}
-//             </Motion>
-//         )}
-//     </ReactAccelerometer>
-// )
-
-
-// const AwesomeComponent = () => (
-//     <ReactAccelerometerMotion>
-//         {({ x, y }) => (
-//             <img
-//                 src={maracasImg}
-//                 style={{ transform: `translate3d(${x}px, ${y}px, 0)` }}
-//             />
-//         )}
-//     </ReactAccelerometerMotion>
-// )
-
 export const ShakerView = () => {
     const [isLoaded, setLoaded] = useState(false);
     const sampler = useRef(null);
@@ -45,20 +22,40 @@ export const ShakerView = () => {
             }
         ).toMaster();
         // askPermissions()
-        isAccelerometer()
+        // isAccelerometer()
     }, []);
 
-    const askPermissions = () => {
-        navigator.permissions.query({ name: 'accelerometer' })
-            .then(result => {
-                if (result.state === 'denied') {
-                    console.log('Permission to use accelerometer sensor is denied.');
-                    return;
-                }
-                console.log('Asking for permissions', result)
-                // Use the sensor.
-            });
+    const askMotionPermissions = () => {
+        // feature detect
+        if (typeof DeviceMotionEvent.requestPermission === 'function') {
+            console.log('request permission')
+            DeviceMotionEvent.requestPermission()
+                .then(permissionState => {
+                    if (permissionState === 'granted') {
+                        window.addEventListener('devicemotion', () => { });
+                    }
+                })
+                .catch(console.error);
+        } else {
+            // handle regular non iOS 13+ devices
+        }
     }
+
+    const askOrientationPermissions = () => {
+        // feature detect
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            console.log('request permission')
+          DeviceOrientationEvent.requestPermission()
+            .then(permissionState => {
+              if (permissionState === 'granted') {
+                window.addEventListener('deviceorientation', () => {});
+              }
+            })
+            .catch(console.error);
+        } else {
+          // handle regular non iOS 13+ devices
+        }
+      }
 
     const isAccelerometer = () => {
         if (window.DeviceMotionEvent == undefined) {
@@ -73,9 +70,9 @@ export const ShakerView = () => {
 
     const accelerometerUpdate = (e) => {
         console.log('positions---->')
-        var aX = e.accelerationIncludingGravity.x*1;
-        var aY = e.accelerationIncludingGravity.y*1;
-        var aZ = e.accelerationIncludingGravity.z*1;
+        var aX = e.accelerationIncludingGravity.x * 1;
+        var aY = e.accelerationIncludingGravity.y * 1;
+        var aZ = e.accelerationIncludingGravity.z * 1;
 
         console.log('positions---->', aX, aY, aZ)
 
@@ -87,33 +84,6 @@ export const ShakerView = () => {
         const yPosition = Math.atan2(aX, aZ);
 
         console.log('positions---->', xPosition, yPosition)
-     }
-
-    const useAccelerometer = () => {
-        // let accelerometer = null;
-        // try {
-        //     accelerometer = new Accelerometer({ referenceFrame: 'device' });
-        //     accelerometer.addEventListener('error', event => {
-        //         // Handle runtime errors.
-        //         if (event.error.name === 'NotAllowedError') {
-        //             // Branch to code for requesting permission.
-        //         } else if (event.error.name === 'NotReadableError') {
-        //             console.log('Cannot connect to the sensor.');
-        //         }
-        //     });
-        //     accelerometer.addEventListener('reading', () => reloadOnShake(accelerometer));
-        //     accelerometer.start();
-        // } catch (error) {
-        //     // Handle construction errors.
-        //     if (error.name === 'SecurityError') {
-        //         // See the note above about feature policy.
-        //         console.log('Sensor construction was blocked by a feature policy.');
-        //     } else if (error.name === 'ReferenceError') {
-        //         console.log('Sensor is not supported by the User Agent.');
-        //     } else {
-        //         throw error;
-        //     }
-        // }
     }
 
     const handleClick = () => sampler.current.triggerAttack("A1");
@@ -122,12 +92,16 @@ export const ShakerView = () => {
 
     return (
         <div className='ShakerView'>
-
+            <div className='motion' onClick={() => askMotionPermissions()}>
+                Give Motion Permissions
+            </div>
+            <div className='motion' onClick={() => askOrientationPermissions()}>
+                Give Orientation Permissions
+            </div>
             <div className='buttonshaker' disabled={!isLoaded} onClick={() => handleClick()}>
                 PLAY MARACAS
                 <br />
                 <img className='maracas' src={maracasImg} alt="Logo" />
-                {/* <AwesomeComponent/> */}
             </div>
         </div>
     );
