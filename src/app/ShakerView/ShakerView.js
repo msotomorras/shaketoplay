@@ -44,7 +44,7 @@ export const ShakerView = () => {
                 }
             }
         ).toMaster();
-        askPermissions()
+        // askPermissions()
         isAccelerometer()
     }, []);
 
