@@ -83,7 +83,7 @@ export const ShakerView = () => {
 
         
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (aY > 18) handleAccelerated(aX, aY, aZ)
+        if (aY > 19) handleAccelerated(aX, aY, aZ)
 
         //The following two lines are just to calculate a
         // tilt. Not really needed. 
@@ -103,7 +103,7 @@ export const ShakerView = () => {
                 <img className='maracas' src={maracasImg} alt="Logo" />
             </div>
             <div className='motion-permissions'>
-                To use this app, give permissions to access the motion sensors.
+                If you want to make your ryhthm while shaking your body and your phone...
             <div className='permissions-button' onClick={() => askMotionPermissions()}>
                     Give Motion Permissions
             </div>
