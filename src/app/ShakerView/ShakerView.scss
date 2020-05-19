@@ -14,8 +14,9 @@
 
     .buttonshaker {
         background: #fa4659;
-        padding: 2rem;
+        padding: 2.2rem 2rem;
         border-radius: 70px;
+        font-size: 1.5rem;
         // box-shadow: 8px 10px #ff7b7b;
         box-shadow: 0 19px #ff8d8d;
         color: white;
@@ -44,11 +45,11 @@
     }
     
 
-    .buttonshaker:active {
-        background-color: #fa4659;
-        box-shadow: 0 5px #ff7b7b;
-        transform: translateY(14px);
-    }
+    // .buttonshaker:active {
+    //     background-color: #fa4659;
+    //     box-shadow: 0 5px #ff7b7b;
+    //     transform: translateY(14px);
+    // }
 
     .motion-permissions {
         font-size: .7rem;
@@ -60,6 +61,10 @@
             padding: 17px;
             margin-top: 1rem;
             background: #dcf1e3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 150px;
         }
     }
     

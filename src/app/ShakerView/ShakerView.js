@@ -93,11 +93,15 @@ export const ShakerView = () => {
     
     const handleClick = () => {
         playMaracas()
+        setButtonClicked(true)
+        // setButtonClicked(false)
+        setTimeout(() => { 
+            setButtonClicked(false)
+        }, 100);
     }
 
     const playMaracas = () => sampler.current.triggerAttack("A1");
 
-    console.log('accelerated', accelerated)
     return (
         <div className='ShakerView'>
             <div className={`buttonshaker ${buttonClicked && 'clicked'}`} disabled={!isLoaded} onMouseDown={() => setButtonClicked(true)} onMouseUp={() => setButtonClicked(false)} onClick={() => handleClick()}>
