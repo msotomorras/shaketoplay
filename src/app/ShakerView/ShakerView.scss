@@ -35,6 +35,12 @@
             width: 50px;
             height: auto;
         }
+
+        &.clicked {
+            background-color: #fa4659;
+            box-shadow: 0 5px #ff7b7b;
+            transform: translateY(14px);
+        }
     }
     
 

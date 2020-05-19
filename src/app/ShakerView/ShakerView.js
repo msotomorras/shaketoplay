@@ -11,6 +11,7 @@ export const ShakerView = () => {
     const [isLoaded, setLoaded] = useState(false);
     const sampler = useRef(null);
     const [accelerated, setAccelerated] = useState(true)
+    const [buttonClicked, setButtonClicked] = useState(false)
 
 
     useEffect(() => {
@@ -96,13 +97,16 @@ export const ShakerView = () => {
         const yPosition = Math.atan2(aX, aZ);
     }
 
-    const handleClick = () => sampler.current.triggerAttack("A1");
+    
+    const handleClick = () => {
+        playMaracas()
+    }
 
     const playMaracas = () => sampler.current.triggerAttack("A1");
 
     return (
         <div className='ShakerView'>
-            <div className='buttonshaker' disabled={!isLoaded} onClick={() => handleClick()}>
+            <div className={`buttonshaker ${buttonClicked && 'clicked'}`} disabled={!isLoaded} onMouseDown={() => setButtonClicked(true)} onMouseUp={() => setButtonClicked(false)} onClick={() => handleClick()}>
                 PLAY MARACAS
                 <br />
                 <img className='maracas' src={maracasImg} alt="Logo" />
