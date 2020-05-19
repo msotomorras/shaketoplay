@@ -64,8 +64,8 @@ export const ShakerView = () => {
         setAccelerated(true)
         console.log('PLAY!')
         setTimeout(() => { 
-            tsetAccelerated(false)
-        }, 100);
+            setAccelerated(false)
+        }, 10);
         
     }
 
