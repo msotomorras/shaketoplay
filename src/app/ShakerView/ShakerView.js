@@ -60,6 +60,7 @@ export const ShakerView = () => {
 
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
+        setAccelerated(true)
     }
 
     const isAccelerometer = () => {
@@ -87,8 +88,6 @@ export const ShakerView = () => {
         // tilt. Not really needed. 
         const xPosition = Math.atan2(aY, aZ);
         const yPosition = Math.atan2(aX, aZ);
-
-        console.log('positions---->', xPosition, yPosition)
     }
 
     const handleClick = () => sampler.current.triggerAttack("A1");
@@ -97,17 +96,16 @@ export const ShakerView = () => {
 
     return (
         <div className='ShakerView'>
+            <div className='buttonshaker' disabled={!isLoaded} onClick={() => handleClick()}>
+                PLAY MARACAS
+                <br />
+                <img className='maracas' src={maracasImg} alt="Logo" />
+            </div>
             <div className='motion-permissions'>
                 To use this app, give permissions to access the motion sensors.
             <div className='permissions-button' onClick={() => askMotionPermissions()}>
                     Give Motion Permissions
             </div>
-            </div>
-
-            <div className='buttonshaker' disabled={!isLoaded} onClick={() => handleClick()}>
-                PLAY MARACAS
-                <br />
-                <img className='maracas' src={maracasImg} alt="Logo" />
             </div>
         </div>
     );

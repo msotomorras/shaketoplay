@@ -10,9 +10,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #dcedc1;
+    background: #fff3f3;
 
     .buttonshaker {
+        background: #fa4659;
+        padding: 2rem;
+        border-radius: 70px;
+        box-shadow: 8px 10px #ffbfbf;
         color: white;
         font-weight: bold;
         display: flex;
@@ -26,14 +30,15 @@
     }
 
     .motion-permissions {
+        font-size: .7rem;
         position: absolute;
-        top: 20%;
+        bottom: 20%;
         width: 50%;
 
         .permissions-button {
             padding: 17px;
             margin-top: 1rem;
-            background: #feffe4;
+            background: #d7ffd6;
         }
     }
     
