@@ -60,9 +60,13 @@ export const ShakerView = () => {
 
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
+        if (!accelerated) playMaracas()
         setAccelerated(true)
         console.log('PLAY!')
-        playMaracas()
+        setTimeout(() => { 
+            tsetAccelerated(false)
+        }, 100);
+        
     }
 
     const isAccelerometer = () => {
@@ -83,7 +87,7 @@ export const ShakerView = () => {
 
         
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (aY > 19) handleAccelerated(aX, aY, aZ)
+        if (aY > 15) handleAccelerated(aX, aY, aZ)
 
         //The following two lines are just to calculate a
         // tilt. Not really needed. 
