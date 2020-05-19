@@ -2,33 +2,33 @@ import React, { useState, useRef, useEffect, Component, PropTypes } from "react"
 import { Sampler } from "tone";
 import A1 from "../../assets/shaker.mp3";
 import maracasImg from '../../assets/maracas1.png';
-import { Motion, spring } from 'react-motion'
-import ReactAccelerometer from 'react-accelerometer'
+// import { Motion, spring } from 'react-motion'
+// import ReactAccelerometer from 'react-accelerometer'
 
 import './ShakerView.scss';
 
 /* Combining React-Accelerometer with React-Motion */
-const ReactAccelerometerMotion = ({ children }) => (
-    <ReactAccelerometer>
-        {({ x, y }) => (
-            <Motion style={{ x: spring(x), y: spring(y) }}>
-                {pos => children(pos)}
-            </Motion>
-        )}
-    </ReactAccelerometer>
-)
+// const ReactAccelerometerMotion = ({ children }) => (
+//     <ReactAccelerometer>
+//         {({ x, y }) => (
+//             <Motion style={{ x: spring(x), y: spring(y) }}>
+//                 {pos => children(pos)}
+//             </Motion>
+//         )}
+//     </ReactAccelerometer>
+// )
 
 
-const AwesomeComponent = () => (
-    <ReactAccelerometerMotion>
-        {({ x, y }) => (
-            <img
-                src={maracasImg}
-                style={{ transform: `translate3d(${x}px, ${y}px, 0)` }}
-            />
-        )}
-    </ReactAccelerometerMotion>
-)
+// const AwesomeComponent = () => (
+//     <ReactAccelerometerMotion>
+//         {({ x, y }) => (
+//             <img
+//                 src={maracasImg}
+//                 style={{ transform: `translate3d(${x}px, ${y}px, 0)` }}
+//             />
+//         )}
+//     </ReactAccelerometerMotion>
+// )
 
 export const ShakerView = () => {
     const [isLoaded, setLoaded] = useState(false);
