@@ -76,7 +76,8 @@ export const ShakerView = () => {
 
         console.log('positions---->', aX, aY, aZ)
 
-        console.log('ax', aX, aY, aZ);
+        if (aX > 10)console.log('ax', aX, aY, aZ);
+        // if (aX > 10)console.log('ax', aX, aY, aZ);
         playMaracas()
         //The following two lines are just to calculate a
         // tilt. Not really needed. 
