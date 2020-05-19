@@ -10,6 +10,7 @@ import './ShakerView.scss';
 export const ShakerView = () => {
     const [isLoaded, setLoaded] = useState(false);
     const sampler = useRef(null);
+    const [accelerated, setAccelerated] = useState(true)
 
 
     useEffect(() => {
@@ -45,17 +46,21 @@ export const ShakerView = () => {
         // feature detect
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
             console.log('request permission')
-          DeviceOrientationEvent.requestPermission()
-            .then(permissionState => {
-              if (permissionState === 'granted') {
-                window.addEventListener('deviceorientation', () => {});
-              }
-            })
-            .catch(console.error);
+            DeviceOrientationEvent.requestPermission()
+                .then(permissionState => {
+                    if (permissionState === 'granted') {
+                        window.addEventListener('deviceorientation', () => { });
+                    }
+                })
+                .catch(console.error);
         } else {
-          // handle regular non iOS 13+ devices
+            // handle regular non iOS 13+ devices
         }
-      }
+    }
+
+    const handleAccelerated = (aX, aY, aZ) => {
+        console.log('ax', aX, aY, aZ);
+    }
 
     const isAccelerometer = () => {
         if (window.DeviceMotionEvent == undefined) {
@@ -74,11 +79,10 @@ export const ShakerView = () => {
         var aY = e.accelerationIncludingGravity.y * 1;
         var aZ = e.accelerationIncludingGravity.z * 1;
 
-        console.log('positions---->', aX, aY, aZ)
-
-        if (aX > 10)console.log('ax', aX, aY, aZ);
+        
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        playMaracas()
+        if (aY > 10) handleAccelerated(aX, aY, aZ)
+
         //The following two lines are just to calculate a
         // tilt. Not really needed. 
         const xPosition = Math.atan2(aY, aZ);
@@ -96,10 +100,10 @@ export const ShakerView = () => {
             <div className='motion-permissions'>
                 To use this app, give permissions to access the motion sensors.
             <div className='permissions-button' onClick={() => askMotionPermissions()}>
-                Give Motion Permissions
+                    Give Motion Permissions
             </div>
             </div>
-            
+
             <div className='buttonshaker' disabled={!isLoaded} onClick={() => handleClick()}>
                 PLAY MARACAS
                 <br />
