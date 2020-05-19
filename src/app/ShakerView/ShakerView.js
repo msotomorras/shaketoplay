@@ -63,7 +63,7 @@ export const ShakerView = () => {
             alert("no accelerometer");
         }
         else {
-            alert("accelerometer found");
+            // alert("accelerometer found");
             window.addEventListener("devicemotion", accelerometerUpdate, true);
         }
     }
@@ -76,7 +76,7 @@ export const ShakerView = () => {
 
         console.log('positions---->', aX, aY, aZ)
 
-        alert(aX);
+        console.log('ax', aX, aY, aZ);
         playMaracas()
         //The following two lines are just to calculate a
         // tilt. Not really needed. 
@@ -92,12 +92,13 @@ export const ShakerView = () => {
 
     return (
         <div className='ShakerView'>
-            <div className='motion' onClick={() => askMotionPermissions()}>
+            <div className='motion-permissions'>
+                To use this app, give permissions to access the motion sensors.
+            <div className='permissions-button' onClick={() => askMotionPermissions()}>
                 Give Motion Permissions
             </div>
-            <div className='motion' onClick={() => askOrientationPermissions()}>
-                Give Orientation Permissions
             </div>
+            
             <div className='buttonshaker' disabled={!isLoaded} onClick={() => handleClick()}>
                 PLAY MARACAS
                 <br />
