@@ -61,12 +61,12 @@ export const ShakerView = () => {
 
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
-        playMaracas()
-        setAccelerated(true)
+        // setAccelerated(true)
         console.log('PLAY!')
-        setTimeout(() => { 
-            setAccelerated(false)
-        }, 100);
+        playMaracas()
+        // setTimeout(() => { 
+        //     setAccelerated(false)
+        // }, 100);
         
     }
 
