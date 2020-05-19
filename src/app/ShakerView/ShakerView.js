@@ -61,13 +61,12 @@ export const ShakerView = () => {
 
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
-        !accelerated && playMaracas()
+        playMaracas()
         setAccelerated(true)
         console.log('PLAY!')
         setTimeout(() => { 
             setAccelerated(false)
         }, 100);
-        setAccelerated(false)
         
     }
 
@@ -87,14 +86,8 @@ export const ShakerView = () => {
         var aY = e.accelerationIncludingGravity.y * 1;
         var aZ = e.accelerationIncludingGravity.z * 1;
 
-        
         // if (aX > 10)console.log('ax', aX, aY, aZ);
         if (aY > 15) handleAccelerated(aX, aY, aZ)
-
-        //The following two lines are just to calculate a
-        // tilt. Not really needed. 
-        const xPosition = Math.atan2(aY, aZ);
-        const yPosition = Math.atan2(aX, aZ);
     }
 
     
@@ -104,6 +97,7 @@ export const ShakerView = () => {
 
     const playMaracas = () => sampler.current.triggerAttack("A1");
 
+    console.log('accelerated', accelerated)
     return (
         <div className='ShakerView'>
             <div className={`buttonshaker ${buttonClicked && 'clicked'}`} disabled={!isLoaded} onMouseDown={() => setButtonClicked(true)} onMouseUp={() => setButtonClicked(false)} onClick={() => handleClick()}>
