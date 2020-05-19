@@ -60,12 +60,13 @@ export const ShakerView = () => {
 
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
-        if (!accelerated) playMaracas()
+        !accelerated && playMaracas()
         setAccelerated(true)
         console.log('PLAY!')
         setTimeout(() => { 
             setAccelerated(false)
-        }, 10);
+        }, 100);
+        setAccelerated(false)
         
     }
 
