@@ -87,7 +87,7 @@ export const ShakerView = () => {
         var aZ = e.accelerationIncludingGravity.z * 1;
 
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (aY > 18) handleAccelerated(aX, aY, aZ)
+        if (aY > 14) handleAccelerated(aX, aY, aZ)
     }
 
     
