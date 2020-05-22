@@ -57,7 +57,7 @@ export const ShakerView = () => {
                         Give Motion Permissions
             </div>
                     <div className='permissions-button' onClick={() => setShowModal(false)}>
-                        I have an android, or I'll just play with the button
+                        I'll just play with the button
             </div>
                 </div>
             </div>
@@ -81,6 +81,7 @@ export const ShakerView = () => {
         // setAccelerated(true)
         console.log('PLAY!')
         playMaracas()
+        window.navigator.vibrate(200);
         // setTimeout(() => { 
         //     setAccelerated(false)
         // }, 100);

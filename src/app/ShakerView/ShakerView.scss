@@ -27,7 +27,7 @@
         align-items: center;
         margin-bottom: 12rem;
         overflow: hidden;
-
+        cursor: pointer;
         &:hover {
             // background-color: #ffc1c1;
         }
@@ -43,14 +43,6 @@
             transform: translateY(14px);
         }
     }
-    
-
-    // .buttonshaker:active {
-    //     background-color: #fa4659;
-    //     box-shadow: 0 5px #ff7b7b;
-    //     transform: translateY(14px);
-    // }
-
     .modal-container {
         background: rgba(2, 2, 2, 0.37);
         display: flex;
@@ -60,14 +52,14 @@
         left: 0;
         right: 0;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         .ModalPermissions {
             background: white;
             padding: 2rem;
             border-radius: 15px;
             position: absolute;
            font-size: .75rem;
-           margin-bottom: 9rem;
+           margin-top: 12rem;
             width: 50%;
             text-align: left;
             max-width: 13rem;
@@ -82,6 +74,7 @@
                 border-radius: 10px;
                 color: white;
                 font-weight: 500;
+                cursor: pointer;
             }
         }
     }
@@ -102,6 +95,7 @@
             justify-content: center;
             align-items: center;
             width: 150px;
+            cursor: pointer;
         }
     }
     
