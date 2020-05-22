@@ -70,7 +70,7 @@ export const ShakerView = () => {
             <div className='motion-permissions'>
                 If you want to make your ryhthm while shaking your body and your phone...
             <div className='permissions-button' onClick={() => askMotionPermissions()}>
-                    Give Motion Permissions
+                Give Motion Permissions
             </div>
             </div>
         )
@@ -122,11 +122,13 @@ export const ShakerView = () => {
 
     return (
         <div className='ShakerView'>
+            
             <div className={`buttonshaker ${buttonClicked && 'clicked'}`} disabled={!isLoaded} onMouseDown={() => setButtonClicked(true)} onMouseUp={() => setButtonClicked(false)} onClick={() => handleClick()}>
                 PLAY MARACAS
                 <br />
                 <img className='maracas' src={maracasImg} alt="Logo" />
             </div>
+            <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
             {showModal && renderModal2()}
         </div>
     );
