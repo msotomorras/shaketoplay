@@ -14,7 +14,7 @@ export const ShakerView = () => {
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
 
-    const delayedQuery = useRef(_.throttle(() => playMaracas(), 600)).current;
+    const delayedQuery = useRef(_.throttle(() => playMaracas(), 1200)).current;
 
 
     useEffect(() => {
