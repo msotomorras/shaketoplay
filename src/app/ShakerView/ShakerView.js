@@ -14,7 +14,7 @@ export const ShakerView = () => {
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
 
-    const delayedQuery = useRef(_.throttle(() => playMaracas(), 100)).current;
+    const delayedQuery = useRef(_.throttle(() => playMaracas(), 300)).current;
 
 
     useEffect(() => {
@@ -26,7 +26,6 @@ export const ShakerView = () => {
                 }
             }
         ).toMaster();
-        // askPermissions()
         isAccelerometer()
     }, []);
 
@@ -80,14 +79,9 @@ export const ShakerView = () => {
 
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
-        // setAccelerated(true)
         console.log('PLAY!')
         delayedQuery()
-        // playMaracas()
         window.navigator.vibrate(200);
-        // setTimeout(() => { 
-        //     setAccelerated(false)
-        // }, 100);
 
     }
 
@@ -125,18 +119,18 @@ export const ShakerView = () => {
         sampler.current.triggerAttack("A1")
     }
 
-return (
-    <div className='ShakerView'>
+    return (
+        <div className='ShakerView'>
 
-        <div className={`buttonshaker ${buttonClicked && 'clicked'}`} disabled={!isLoaded} onMouseDown={() => setButtonClicked(true)} onMouseUp={() => setButtonClicked(false)} onClick={() => handleClick()}>
-            PLAY MARACAS
+            <div className={`buttonshaker ${buttonClicked && 'clicked'}`} disabled={!isLoaded} onMouseDown={() => setButtonClicked(true)} onMouseUp={() => setButtonClicked(false)} onClick={() => handleClick()}>
+                PLAY MARACAS
                 <br />
-            <img className='maracas' src={maracasImg} alt="Logo" />
+                <img className='maracas' src={maracasImg} alt="Logo" />
+            </div>
+            <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
+            {showModal && renderModal2()}
         </div>
-        <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
-        {showModal && renderModal2()}
-    </div>
-);
+    );
 };
 
 export default ShakerView
