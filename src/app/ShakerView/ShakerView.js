@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect, Component, PropTypes } from "react";
+import React, { useState, useRef, useEffect, useCallback, PropTypes } from "react";
 import { Sampler } from "tone";
 import A1 from "../../assets/shaker.mp3";
 import maracasImg from '../../assets/maracas1.png';
+import _ from "lodash";
 
 
 import './ShakerView.scss';
@@ -12,6 +13,8 @@ export const ShakerView = () => {
     const [accelerated, setAccelerated] = useState(true)
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
+
+    const delayedQuery = useRef(_.throttle(() => playMaracas(), 100)).current;
 
 
     useEffect(() => {
@@ -52,7 +55,7 @@ export const ShakerView = () => {
             <div className='modal-container'>
                 <div className='ModalPermissions'>
                     If you want to make your ryhthm while shaking your body and your phone...
-            <div className='permissions-button' onClick={() => {askMotionPermissions(); setShowModal(false)}}>
+            <div className='permissions-button' onClick={() => { askMotionPermissions(); setShowModal(false) }}>
                         Give Motion Permissions
             </div>
                     <div className='permissions-button' onClick={() => setShowModal(false)}>
@@ -69,7 +72,7 @@ export const ShakerView = () => {
             <div className='motion-permissions'>
                 If you want to make your ryhthm while shaking your body and your phone...
             <div className='permissions-button' onClick={() => askMotionPermissions()}>
-                Give Motion Permissions
+                    Give Motion Permissions
             </div>
             </div>
         )
@@ -79,7 +82,8 @@ export const ShakerView = () => {
         console.log('ax', aX, aY, aZ);
         // setAccelerated(true)
         console.log('PLAY!')
-        playMaracas()
+        delayedQuery()
+        // playMaracas()
         window.navigator.vibrate(200);
         // setTimeout(() => { 
         //     setAccelerated(false)
@@ -109,28 +113,30 @@ export const ShakerView = () => {
 
 
     const handleClick = () => {
-        playMaracas()
+        // playMaracas()
+        delayedQuery()
         setButtonClicked(true)
-        // setButtonClicked(false)
         setTimeout(() => {
             setButtonClicked(false)
         }, 100);
     }
 
-    const playMaracas = () => sampler.current.triggerAttack("A1");
+    const playMaracas = () => {
+        sampler.current.triggerAttack("A1")
+    }
 
-    return (
-        <div className='ShakerView'>
-            
-            <div className={`buttonshaker ${buttonClicked && 'clicked'}`} disabled={!isLoaded} onMouseDown={() => setButtonClicked(true)} onMouseUp={() => setButtonClicked(false)} onClick={() => handleClick()}>
-                PLAY MARACAS
+return (
+    <div className='ShakerView'>
+
+        <div className={`buttonshaker ${buttonClicked && 'clicked'}`} disabled={!isLoaded} onMouseDown={() => setButtonClicked(true)} onMouseUp={() => setButtonClicked(false)} onClick={() => handleClick()}>
+            PLAY MARACAS
                 <br />
-                <img className='maracas' src={maracasImg} alt="Logo" />
-            </div>
-            <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
-            {showModal && renderModal2()}
+            <img className='maracas' src={maracasImg} alt="Logo" />
         </div>
-    );
+        <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
+        {showModal && renderModal2()}
+    </div>
+);
 };
 
 export default ShakerView
