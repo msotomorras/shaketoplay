@@ -1,11 +1,16 @@
 import React, { useState, useRef, useEffect, useCallback, PropTypes } from "react";
 import { Sampler } from "tone";
-import A1 from "../../assets/shaker.mp3";
+import maracas from "../../assets/maracas.mp3";
 import maracasImg from '../../assets/maracas1.png';
 import _ from "lodash";
-
+import firebase from 'firebase';
+import { firebaseConfig } from '../lib/firebaseConfig'
 
 import './ShakerView.scss';
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 export const ShakerView = () => {
     const [isLoaded, setLoaded] = useState(false);
@@ -14,12 +19,11 @@ export const ShakerView = () => {
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
 
-    const delayedQuery = useRef(_.debounce(() => playMaracas(), 100)).current;
-
+    const delayedQuery = useRef(_.debounce(() => playMaracas(), 80)).current;
 
     useEffect(() => {
         sampler.current = new Sampler(
-            { A1 },
+            { maracas },
             {
                 onload: () => {
                     setLoaded(true);
@@ -45,10 +49,6 @@ export const ShakerView = () => {
         }
     }
 
-    const handleGivePermissions = () => {
-
-    }
-
     const renderModal2 = () => {
         return (
             <div className='modal-container'>
@@ -63,17 +63,6 @@ export const ShakerView = () => {
                 </div>
             </div>
 
-        )
-    }
-
-    const renderModal = () => {
-        return (
-            <div className='motion-permissions'>
-                If you want to make your ryhthm while shaking your body and your phone...
-            <div className='permissions-button' onClick={() => askMotionPermissions()}>
-                    Give Motion Permissions
-            </div>
-            </div>
         )
     }
 
@@ -101,19 +90,18 @@ export const ShakerView = () => {
         var aY = e.accelerationIncludingGravity.y * 1;
         var aZ = e.accelerationIncludingGravity.z * 1;
 
-        var modulo =  Math.sqrt(aX*aX, aY*aY, aZ*aZ)
+        var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
         console.log(aX, aY, aZ, 'modulo---', modulo)
 
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (modulo > 30) {
+        if (modulo > 25) {
             handleAccelerated(aX, aY, aZ)
-        } 
+        }
     }
 
 
     const handleClick = () => {
         playMaracas()
-        // delayedQuery()
         setButtonClicked(true)
         setTimeout(() => {
             setButtonClicked(false)
@@ -121,14 +109,18 @@ export const ShakerView = () => {
     }
 
     const playMaracas = () => {
-        sampler.current.triggerAttack("A1")
+        sampler.current.triggerAttack("maracas")
     }
 
     return (
         <div className='ShakerView'>
-
-            <div className={`buttonshaker ${buttonClicked && 'clicked'}`} disabled={!isLoaded} onMouseDown={() => setButtonClicked(true)} onMouseUp={() => setButtonClicked(false)} onClick={() => handleClick()}>
-                PLAY MARACAS
+            <div
+                className={`buttonshaker ${buttonClicked && 'clicked'}`}
+                disabled={!isLoaded}
+                onMouseDown={() => setButtonClicked(true)}
+                onMouseUp={() => setButtonClicked(false)}
+                onClick={() => handleClick()}>
+                    PLAY MARACAS
                 <br />
                 <img className='maracas' src={maracasImg} alt="Logo" />
             </div>
