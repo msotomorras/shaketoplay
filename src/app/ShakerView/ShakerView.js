@@ -70,18 +70,21 @@ export const ShakerView = () => {
     const [showModal, setShowModal] = useState(true)
     const [activeInstrument, setActiveInstrument] = useState({})
     const [activeSample, setActiveSample] = useState('A1')
+    const [index, setIndex] = useState(0)
 
     const delayedQuery = useRef(_.debounce(() => playMaracas(activeSample), 50)).current;
 
     const getRandomInstrument = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
         console.log(randomIndex)
-        setActiveSample(sampleArray[randomIndex])
-        return instruments[randomIndex]
+        
+        return randomIndex
     }
 
     useEffect(() => {
-        setActiveInstrument(getRandomInstrument())
+        setIndex(getRandomInstrument)
+        setActiveInstrument(instruments[index])
+        setActiveSample(activeInstrument.sample)
         sampler.current = new Sampler(
             {
                 A1,
@@ -180,8 +183,9 @@ export const ShakerView = () => {
 
     const playMaracas = (sample) => {
         console.log('play instrument', activeInstrument, activeSample)
-        console.log('active idex', activeSample)
-        sampler.current.triggerAttack(sample ? sample : activeSample)
+        console.log('sample', sample)
+        console.log('index', index)
+        sampler.current.triggerAttack(instruments[index].sample)
     }
 
     console.log('instrument', activeInstrument)
@@ -193,9 +197,9 @@ export const ShakerView = () => {
                 onMouseDown={() => setButtonClicked(true)}
                 onMouseUp={() => setButtonClicked(false)}
                 onClick={() => handleClick()}>
-                PLAY {activeInstrument.instrumentName}
+                PLAY {instruments[index].instrumentName}
                 <br />
-                <img className='maracas' src={activeInstrument.img} alt="Logo" />
+                <img className='maracas' src={instruments[index].img} alt="Logo" />
             </div>
             <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
             {showModal && renderModal2()}
