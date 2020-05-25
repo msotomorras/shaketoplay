@@ -73,7 +73,7 @@ export const ShakerView = () => {
 
     const delayedQuery = useRef(_.debounce(() => playMaracas(), 50)).current;
 
-    const getRandomInstruemt = () => {
+    const getRandomInstrument = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
         console.log(randomIndex)
         setActiveSample(sampleArray[randomIndex])
@@ -81,8 +81,7 @@ export const ShakerView = () => {
     }
 
     useEffect(() => {
-        setActiveInstrument(getRandomInstruemt())
-
+        setActiveInstrument(getRandomInstrument())
         sampler.current = new Sampler(
             {
                 A1,
@@ -163,7 +162,7 @@ export const ShakerView = () => {
 
         var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
 
-        console.log(aX, aY, aZ, 'modulo---', modulo)
+        // console.log(aX, aY, aZ, 'modulo---', modulo)
         // if (aX > 10)console.log('ax', aX, aY, aZ);
         if (modulo > 25 && modulo < 35) {
             handleAccelerated(aX, aY, aZ)
@@ -185,6 +184,7 @@ export const ShakerView = () => {
         sampler.current.triggerAttack(activeSample)
     }
 
+    console.log('instrument', activeInstrument)
     return (
         <div className='ShakerView'>
             <div
