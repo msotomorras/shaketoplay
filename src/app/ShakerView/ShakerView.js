@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback, PropTypes } from "react";
 import { Sampler } from "tone";
 import A1 from "../../assets/maracas.mp3";
-import BONGO from "../../assets/bongo.mp3";
+import B1 from "../../assets/bongo.mp3";
 import maracasImg from '../../assets/maracas1.png';
-import cymbal from "../../assets/cymbal.wav";
-import woodblock from "../../assets/woodblock1.wav";
-import snaredrum from "../../assets/snaredrum.mp3";
-import tambourine from "../../assets/Tambourine.wav";
+import C1 from "../../assets/cymbal.wav";
+import F1 from "../../assets/woodblock1.wav";
+import D1 from "../../assets/snaredrum.mp3";
+import E1 from "../../assets/Tambourine.wav";
 import _ from "lodash";
 import firebase from 'firebase';
 import { firebaseConfig } from '../lib/firebaseConfig'
@@ -25,23 +25,23 @@ const instruments = [
     },
     {
         instrumentName: 'bongo',
-        sample: BONGO
+        sample: B1
     },
     {
         instrumentName: 'cymbal',
-        sample: cymbal
+        sample: C1
     },
     {
         instrumentName: 'woodblock',
-        sample: woodblock
+        sample: F1
     },
     {
         instrumentName: 'tambourine',
-        sample: tambourine
+        sample: E1
     },
     {
         instrumentName: 'snaredrum',
-        sample: snaredrum
+        sample: D1
     }
 ]
 export const ShakerView = () => {
@@ -50,8 +50,9 @@ export const ShakerView = () => {
     const [accelerated, setAccelerated] = useState(true)
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
+    const [ activeInstrument, setActiveInstrument ] = useState({})
 
-    const delayedQuery = useRef(_.debounce(() => playMaracas(), 80)).current;
+    const delayedQuery = useRef(_.throttle(() => playMaracas(), 80)).current;
 
     const getRandomInstruemt = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
@@ -60,9 +61,10 @@ export const ShakerView = () => {
     }
 
     useEffect(() => {
-        console.log('instruent', getRandomInstruemt())
+        setActiveInstrument(getRandomInstruemt())
         sampler.current = new Sampler(
-            { A1 },
+            // activeInstrument.sample,
+            {A1},
             {
                 onload: () => {
                     setLoaded(true);
@@ -133,7 +135,7 @@ export const ShakerView = () => {
         console.log(aX, aY, aZ, 'modulo---', modulo)
 
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (modulo > 25 && modulo < 30) {
+        if (modulo > 25 && modulo < 27) {
             handleAccelerated(aX, aY, aZ)
         }
     }
@@ -159,7 +161,7 @@ export const ShakerView = () => {
                 onMouseDown={() => setButtonClicked(true)}
                 onMouseUp={() => setButtonClicked(false)}
                 onClick={() => handleClick()}>
-                    PLAY MARACAS
+                    PLAY {activeInstrument.instrumentName}
                 <br />
                 <img className='maracas' src={maracasImg} alt="Logo" />
             </div>
