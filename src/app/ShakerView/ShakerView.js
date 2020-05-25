@@ -160,7 +160,7 @@ export const ShakerView = () => {
         var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
 
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (modulo > 25 && modulo < 27) {
+        if (modulo > 25) {
             handleAccelerated(aX, aY, aZ)
         }
     }
