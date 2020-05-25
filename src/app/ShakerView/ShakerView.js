@@ -105,7 +105,7 @@ export const ShakerView = () => {
         console.log(aX, aY, aZ, 'modulo---', modulo)
 
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (modulo > 15) {
+        if (modulo > 28) {
             handleAccelerated(aX, aY, aZ)
         } 
     }
