@@ -71,7 +71,7 @@ export const ShakerView = () => {
     const [activeInstrument, setActiveInstrument] = useState({})
     const [activeSample, setActiveSample] = useState('A1')
 
-    const delayedQuery = useRef(_.debounce(() => playMaracas(), 50)).current;
+    const delayedQuery = useRef(_.debounce(() => playMaracas(activeSample), 50)).current;
 
     const getRandomInstrument = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
@@ -138,7 +138,7 @@ export const ShakerView = () => {
 
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
-        console.log('PLAY!')
+        console.log('PLAY!', activeInstrument.sample)
         delayedQuery()
         window.navigator.vibrate(200);
 
@@ -178,10 +178,10 @@ export const ShakerView = () => {
         }, 100);
     }
 
-    const playMaracas = () => {
+    const playMaracas = (sample) => {
         console.log('play instrument', activeInstrument.sample, activeSample)
         console.log('active idex', activeSample)
-        sampler.current.triggerAttack(activeSample)
+        sampler.current.triggerAttack(sample ? sample : activeSample)
     }
 
     console.log('instrument', activeInstrument)
