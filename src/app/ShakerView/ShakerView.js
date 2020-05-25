@@ -142,7 +142,8 @@ export const ShakerView = () => {
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
         console.log('PLAY!', activeInstrument.sample)
-        delayedQuery()
+        // delayedQuery()
+        playMaracas()
         window.navigator.vibrate(200);
 
     }
