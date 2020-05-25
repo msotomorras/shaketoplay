@@ -3,6 +3,11 @@ import { Sampler } from "tone";
 import A1 from "../../assets/maracas.mp3";
 import B1 from "../../assets/bongo.mp3";
 import maracasImg from '../../assets/maracas1.png';
+import bongosImg from '../../assets/bongo1.png';
+import cymbalImg from '../../assets/cymbal.png';
+import snaredrumImg from '../../assets/snaredrum.png';
+import woodblockImg from '../../assets/woodblock.png';
+import tambourineImg from '../../assets/tambourine.png';
 import C1 from "../../assets/cymbal.wav";
 import F1 from "../../assets/woodblock1.wav";
 import D1 from "../../assets/snaredrum.mp3";
@@ -21,27 +26,38 @@ if (!firebase.apps.length) {
 const instruments = [
     {
         instrumentName: 'maracas',
-        sample: A1
+        sample: 'A1',
+        img: maracasImg
     },
     {
         instrumentName: 'bongo',
-        sample: B1
+        sample: 'B1',
+        img: bongosImg
     },
     {
         instrumentName: 'cymbal',
-        sample: C1
+        sample: 'C1',
+        img: cymbalImg
     },
     {
         instrumentName: 'woodblock',
-        sample: F1
+        sample: 'F1',
+        img: woodblockImg
     },
     {
         instrumentName: 'tambourine',
-        sample: E1
+        sample: 'E1',
+        img: tambourineImg
     },
     {
         instrumentName: 'snaredrum',
-        sample: D1
+        sample: 'D1',
+        img: snaredrumImg
+    },
+    {
+        instrumentName: 'snaredrum',
+        sample: 'D1',
+        img: snaredrumImg
     }
 ]
 export const ShakerView = () => {
@@ -51,20 +67,30 @@ export const ShakerView = () => {
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
     const [ activeInstrument, setActiveInstrument ] = useState({})
+    const [activeSample, setActiveSample] = useState('')
 
-    const delayedQuery = useRef(_.throttle(() => playMaracas(), 80)).current;
+    const delayedQuery = useRef(_.debounce(() => playMaracas(), 50)).current;
 
     const getRandomInstruemt = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
         console.log(randomIndex)
+        setActiveSample("B1")
         return instruments[randomIndex]
     }
 
+    const sampleArray = [A1, B1]
     useEffect(() => {
         setActiveInstrument(getRandomInstruemt())
+
         sampler.current = new Sampler(
-            // activeInstrument.sample,
-            {A1},
+            {
+                A1, 
+                B1, 
+                C1, 
+                D1, 
+                E1, 
+                F1
+            },
             {
                 onload: () => {
                     setLoaded(true);
@@ -132,7 +158,6 @@ export const ShakerView = () => {
         var aZ = e.accelerationIncludingGravity.z * 1;
 
         var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
-        console.log(aX, aY, aZ, 'modulo---', modulo)
 
         // if (aX > 10)console.log('ax', aX, aY, aZ);
         if (modulo > 25 && modulo < 27) {
@@ -150,7 +175,7 @@ export const ShakerView = () => {
     }
 
     const playMaracas = () => {
-        sampler.current.triggerAttack("A1")
+        sampler.current.triggerAttack(activeInstrument.sample)
     }
 
     return (
@@ -163,7 +188,7 @@ export const ShakerView = () => {
                 onClick={() => handleClick()}>
                     PLAY {activeInstrument.instrumentName}
                 <br />
-                <img className='maracas' src={maracasImg} alt="Logo" />
+                <img className='maracas' src={activeInstrument.img} alt="Logo" />
             </div>
             <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
             {showModal && renderModal2()}

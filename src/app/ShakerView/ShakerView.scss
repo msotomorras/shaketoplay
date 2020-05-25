@@ -23,7 +23,7 @@
     .buttonshaker {
         background: #fa4659;
         padding: 2.2rem 2rem;
-        border-radius: 70px;
+        border-radius: 100px;
         font-size: 1.5rem;
         // box-shadow: 8px 10px #ff7b7b;
         box-shadow: 0 19px #ff8d8d;
@@ -36,12 +36,14 @@
         margin-top: 12rem;
         overflow: hidden;
         cursor: pointer;
+        text-transform: uppercase;
+        // padding-bottom: 1rem;
         &:hover {
             // background-color: #ffc1c1;
         }
         .maracas {
             margin-top: .5rem;
-            width: 50px;
+            width: 78px;
             height: auto;
         }
 
