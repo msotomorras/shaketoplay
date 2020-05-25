@@ -3,6 +3,10 @@ import { Sampler } from "tone";
 import A1 from "../../assets/maracas.mp3";
 import BONGO from "../../assets/bongo.mp3";
 import maracasImg from '../../assets/maracas1.png';
+import cymbal from "../../assets/cymbal.wav";
+import woodblock from "../../assets/woodblock1.wav";
+import snaredrum from "../../assets/snaredrum.mp3";
+import tambourine from "../../assets/Tambourine.wav";
 import _ from "lodash";
 import firebase from 'firebase';
 import { firebaseConfig } from '../lib/firebaseConfig'
@@ -20,8 +24,24 @@ const instruments = [
         sample: A1
     },
     {
-        instrumentName: 'Bongo',
+        instrumentName: 'bongo',
         sample: BONGO
+    },
+    {
+        instrumentName: 'cymbal',
+        sample: cymbal
+    },
+    {
+        instrumentName: 'woodblock',
+        sample: woodblock
+    },
+    {
+        instrumentName: 'tambourine',
+        sample: tambourine
+    },
+    {
+        instrumentName: 'snaredrum',
+        sample: snaredrum
     }
 ]
 export const ShakerView = () => {
@@ -33,8 +53,14 @@ export const ShakerView = () => {
 
     const delayedQuery = useRef(_.debounce(() => playMaracas(), 80)).current;
 
+    const getRandomInstruemt = () => {
+        const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
+        console.log(randomIndex)
+        return instruments[randomIndex]
+    }
 
     useEffect(() => {
+        console.log('instruent', getRandomInstruemt())
         sampler.current = new Sampler(
             { A1 },
             {
@@ -107,7 +133,7 @@ export const ShakerView = () => {
         console.log(aX, aY, aZ, 'modulo---', modulo)
 
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (modulo > 17 && modulo < 18) {
+        if (modulo > 25 && modulo < 30) {
             handleAccelerated(aX, aY, aZ)
         }
     }
