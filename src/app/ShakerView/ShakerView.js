@@ -66,7 +66,7 @@ export const ShakerView = () => {
     const [accelerated, setAccelerated] = useState(true)
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
-    const [ activeInstrument, setActiveInstrument ] = useState({})
+    const [activeInstrument, setActiveInstrument] = useState({})
     const [activeSample, setActiveSample] = useState('')
 
     const delayedQuery = useRef(_.debounce(() => playMaracas(), 50)).current;
@@ -84,11 +84,11 @@ export const ShakerView = () => {
 
         sampler.current = new Sampler(
             {
-                A1, 
-                B1, 
-                C1, 
-                D1, 
-                E1, 
+                A1,
+                B1,
+                C1,
+                D1,
+                E1,
                 F1
             },
             {
@@ -121,7 +121,10 @@ export const ShakerView = () => {
             <div className='modal-container'>
                 <div className='ModalPermissions'>
                     If you want to make your ryhthm while shaking your body and your phone...
-            <div className='permissions-button' onClick={() => { askMotionPermissions(); setShowModal(false) }}>
+            <div className='permissions-button' onClick={() => {
+                        askMotionPermissions();
+                        setShowModal(false)
+                    }}>
                         Give Motion Permissions
             </div>
                     <div className='permissions-button' onClick={() => setShowModal(false)}>
@@ -159,6 +162,7 @@ export const ShakerView = () => {
 
         var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
 
+        console.log(aX, aY, aZ, 'modulo---', modulo)
         // if (aX > 10)console.log('ax', aX, aY, aZ);
         if (modulo > 25) {
             handleAccelerated(aX, aY, aZ)
@@ -186,7 +190,7 @@ export const ShakerView = () => {
                 onMouseDown={() => setButtonClicked(true)}
                 onMouseUp={() => setButtonClicked(false)}
                 onClick={() => handleClick()}>
-                    PLAY {activeInstrument.instrumentName}
+                PLAY {activeInstrument.instrumentName}
                 <br />
                 <img className='maracas' src={activeInstrument.img} alt="Logo" />
             </div>
