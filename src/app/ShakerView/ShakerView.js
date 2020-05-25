@@ -19,7 +19,7 @@ export const ShakerView = () => {
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
 
-    const delayedQuery = useRef(_.debounce(() => playMaracas(), 100)).current;
+    const delayedQuery = useRef(_.debounce(() => playMaracas(), 80)).current;
 
     useEffect(() => {
         sampler.current = new Sampler(
