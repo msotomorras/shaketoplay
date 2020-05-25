@@ -40,9 +40,9 @@ const instruments = [
         img: cymbalImg
     },
     {
-        instrumentName: 'woodblock',
-        sample: 'F1',
-        img: woodblockImg
+        instrumentName: 'snaredrum',
+        sample: 'D1',
+        img: snaredrumImg
     },
     {
         instrumentName: 'tambourine',
@@ -50,16 +50,18 @@ const instruments = [
         img: tambourineImg
     },
     {
-        instrumentName: 'snaredrum',
-        sample: 'D1',
-        img: snaredrumImg
+        instrumentName: 'woodblock',
+        sample: 'F1',
+        img: woodblockImg
     },
     {
-        instrumentName: 'snaredrum',
-        sample: 'D1',
-        img: snaredrumImg
-    }
+        instrumentName: 'woodblock',
+        sample: 'F1',
+        img: woodblockImg
+    },
 ]
+
+const sampleArray = ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'F1']
 export const ShakerView = () => {
     const [isLoaded, setLoaded] = useState(false);
     const sampler = useRef(null);
@@ -67,18 +69,17 @@ export const ShakerView = () => {
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
     const [activeInstrument, setActiveInstrument] = useState({})
-    const [activeSample, setActiveSample] = useState('')
+    const [activeSample, setActiveSample] = useState('A1')
 
     const delayedQuery = useRef(_.debounce(() => playMaracas(), 50)).current;
 
     const getRandomInstruemt = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
         console.log(randomIndex)
-        setActiveSample(instruments[randomIndex].sample)
+        setActiveSample(sampleArray[randomIndex])
         return instruments[randomIndex]
     }
 
-    const sampleArray = [A1, B1]
     useEffect(() => {
         setActiveInstrument(getRandomInstruemt())
 
@@ -180,7 +181,7 @@ export const ShakerView = () => {
 
     const playMaracas = () => {
         console.log('play instrument', activeInstrument.sample, activeSample)
-
+        console.log('active idex', activeSample)
         sampler.current.triggerAttack(activeSample)
     }
 
