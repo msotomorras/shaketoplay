@@ -164,7 +164,7 @@ export const ShakerView = () => {
 
         console.log(aX, aY, aZ, 'modulo---', modulo)
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (modulo > 25) {
+        if (modulo > 25 && modulo < 35) {
             handleAccelerated(aX, aY, aZ)
         }
     }
@@ -179,8 +179,9 @@ export const ShakerView = () => {
     }
 
     const playMaracas = () => {
-        console.log('play instrument')
-        sampler.current.triggerAttack('D1')
+        console.log('play instrument', activeInstrument.sample)
+
+        sampler.current.triggerAttack(activeInstrument.sample.toString())
     }
 
     return (
