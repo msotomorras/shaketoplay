@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, PropTypes } from "react";
 import { Sampler } from "tone";
-import maracas from "../../assets/maracas.mp3";
+import A1 from "../../assets/maracas.mp3";
 import maracasImg from '../../assets/maracas1.png';
 import _ from "lodash";
 import firebase from 'firebase';
@@ -19,11 +19,11 @@ export const ShakerView = () => {
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
 
-    const delayedQuery = useRef(_.debounce(() => playMaracas(), 80)).current;
+    const delayedQuery = useRef(_.debounce(() => playMaracas(), 100)).current;
 
     useEffect(() => {
         sampler.current = new Sampler(
-            { maracas },
+            { A1 },
             {
                 onload: () => {
                     setLoaded(true);
@@ -94,7 +94,7 @@ export const ShakerView = () => {
         console.log(aX, aY, aZ, 'modulo---', modulo)
 
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (modulo > 25) {
+        if (modulo > 15 && modulo < 30) {
             handleAccelerated(aX, aY, aZ)
         }
     }
@@ -109,7 +109,7 @@ export const ShakerView = () => {
     }
 
     const playMaracas = () => {
-        sampler.current.triggerAttack("maracas")
+        sampler.current.triggerAttack("A1")
     }
 
     return (
