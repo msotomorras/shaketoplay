@@ -179,7 +179,8 @@ export const ShakerView = () => {
     }
 
     const playMaracas = () => {
-        sampler.current.triggerAttack(activeInstrument.sample)
+        console.log('play instrument')
+        sampler.current.triggerAttack('D1')
     }
 
     return (
