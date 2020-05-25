@@ -72,7 +72,7 @@ export const ShakerView = () => {
     const [activeSample, setActiveSample] = useState('A1')
     const [index, setIndex] = useState(0)
 
-    const delayedQuery = useRef(_.debounce(() => playMaracas(activeSample), 50)).current;
+    const delayedQuery = useRef(_.debounce(() => playMaracas(instruments[index]), 50)).current;
 
     const getRandomInstrument = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
@@ -141,9 +141,9 @@ export const ShakerView = () => {
 
     const handleAccelerated = (aX, aY, aZ) => {
         console.log('ax', aX, aY, aZ);
-        console.log('PLAY!', activeInstrument.sample)
-        // delayedQuery()
-        playMaracas()
+        console.log('PLAY!', activeInstrument, 'index', index)
+        delayedQuery()
+        // playMaracas()
         window.navigator.vibrate(200);
 
     }
@@ -175,17 +175,15 @@ export const ShakerView = () => {
 
 
     const handleClick = () => {
-        playMaracas()
+        // playMaracas()
+        handleAccelerated()
         setButtonClicked(true)
         setTimeout(() => {
             setButtonClicked(false)
         }, 100);
     }
 
-    const playMaracas = (sample) => {
-        console.log('play instrument', activeInstrument, activeSample)
-        console.log('sample', sample)
-        console.log('index', index)
+    const playMaracas = () => {
         sampler.current.triggerAttack(instruments[index].sample)
     }
 
