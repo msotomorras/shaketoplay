@@ -14,7 +14,7 @@ export const ShakerView = () => {
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
 
-    const delayedQuery = useRef(_.throttle(() => playMaracas(), 1200)).current;
+    const delayedQuery = useRef(_.throttle(() => playMaracas(), 300)).current;
 
 
     useEffect(() => {
@@ -101,14 +101,19 @@ export const ShakerView = () => {
         var aY = e.accelerationIncludingGravity.y * 1;
         var aZ = e.accelerationIncludingGravity.z * 1;
 
+        var modulo =  Math.sqrt(aX*aX, aY*aY, aZ*aZ)
+        console.log(aX, aY, aZ, 'modulo---', modulo)
+
         // if (aX > 10)console.log('ax', aX, aY, aZ);
-        if (aY > 14) handleAccelerated(aX, aY, aZ)
+        if (modulo > 15) {
+            handleAccelerated(aX, aY, aZ)
+        } 
     }
 
 
     const handleClick = () => {
-        // playMaracas()
-        delayedQuery()
+        playMaracas()
+        // delayedQuery()
         setButtonClicked(true)
         setTimeout(() => {
             setButtonClicked(false)
