@@ -189,6 +189,7 @@ export const ShakerView = () => {
         console.log('play instrument', activeInstrument, activeSample)
         console.log('index', index)
         const randomInstIndex = getRandomInstrument()
+        setIndex(randomInstIndex)
         console.log('random index', randomInstIndex)
         sampler.current.triggerAttack(instruments[randomInstIndex].sample)
     }
@@ -203,9 +204,9 @@ export const ShakerView = () => {
                 onMouseDown={() => setButtonClicked(true)}
                 onMouseUp={() => setButtonClicked(false)}
                 onClick={() => handleClick()}>
-                PLAY {instruments[randomRandomIndex].instrumentName}
+                PLAY {instruments[index].instrumentName}
                 <br />
-                <img className='maracas' src={instruments[randomRandomIndex].img} alt="Logo" />
+                <img className='maracas' src={instruments[index].img} alt="Logo" />
             </div>
             <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
             {showModal && renderModal2()}
