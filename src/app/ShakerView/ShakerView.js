@@ -77,13 +77,14 @@ export const ShakerView = () => {
     const getRandomInstrument = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
         console.log(randomIndex)
-        
+        setActiveInstrument(instruments[randomIndex])
+        setActiveSample(activeInstrument.sample)
         return randomIndex
     }
 
     useEffect(() => {
         setIndex(getRandomInstrument)
-        setActiveInstrument(instruments[index])
+        // setActiveInstrument(instruments[index])
         setActiveSample(activeInstrument.sample)
         sampler.current = new Sampler(
             {
@@ -189,7 +190,7 @@ export const ShakerView = () => {
     const playMaracas = () => {
         console.log('play instrument', activeInstrument, activeSample)
         console.log('index', index)
-        const randomInstIndex = getIndex(); // getRandomInstrument()
+        const randomInstIndex = getRandomInstrument()
         console.log('random index', randomInstIndex)
         sampler.current.triggerAttack(instruments[randomInstIndex].sample)
     }
