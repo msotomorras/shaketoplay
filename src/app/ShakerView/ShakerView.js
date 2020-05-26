@@ -196,6 +196,7 @@ export const ShakerView = () => {
     }
 
     console.log('instrument', activeInstrument)
+    const randomRandomIndex = getRandomInstrument();
     return (
         <div className='ShakerView'>
             <div
@@ -204,9 +205,9 @@ export const ShakerView = () => {
                 onMouseDown={() => setButtonClicked(true)}
                 onMouseUp={() => setButtonClicked(false)}
                 onClick={() => handleClick()}>
-                PLAY {instruments[index].instrumentName}
+                PLAY {instruments[randomRandomIndex].instrumentName}
                 <br />
-                <img className='maracas' src={instruments[index].img} alt="Logo" />
+                <img className='maracas' src={instruments[randomRandomIndex].img} alt="Logo" />
             </div>
             <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
             {showModal && renderModal2()}
