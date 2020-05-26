@@ -182,10 +182,14 @@ export const ShakerView = () => {
         }, 80);
     }
 
+    const getIndex = () => {
+        return index;
+    }
+
     const playMaracas = () => {
         console.log('play instrument', activeInstrument, activeSample)
         console.log('index', index)
-        const randomInstIndex = getRandomInstrument()
+        const randomInstIndex = getIndex; // getRandomInstrument()
         console.log('random index', randomInstIndex)
         sampler.current.triggerAttack(instruments[randomInstIndex].sample)
     }
