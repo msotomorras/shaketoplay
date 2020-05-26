@@ -77,8 +77,6 @@ export const ShakerView = () => {
     const getRandomInstrument = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
         console.log(randomIndex)
-        setActiveInstrument(instruments[randomIndex])
-        setActiveSample(activeInstrument.sample)
         return randomIndex
     }
 
