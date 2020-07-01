@@ -208,7 +208,7 @@ export const ShakerView = () => {
                 <br />
                 <img className='maracas' src={instruments[index].img} alt="Logo" />
             </div>
-            <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up</span>
+            <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up. <br/>Tap button to start, shake to continue playing!</span>
             {showModal && renderModal2()}
         </div>
     );
