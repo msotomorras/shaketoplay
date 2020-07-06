@@ -187,7 +187,7 @@ export const ShakerView = () => {
         const randomInstIndex = getRandomInstrument()
         setIndex(randomInstIndex)
         sampler.current.triggerAttack(instruments[randomInstIndex].sample)
-        Event(`${type}-${instruments[randomInstIndex].sample}`, `${type}`, `${type}`)
+        Event(`${type}-${instruments[randomInstIndex].instrumentName}`, `${type}`, `${type}`)
     }
 
     const randomRandomIndex = getRandomInstrument();
