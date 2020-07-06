@@ -143,7 +143,7 @@ export const ShakerView = () => {
         console.log('ax', aX, aY, aZ);
         console.log('PLAY!', activeInstrument.sample)
         delayedQuery()
-        Event(`Shaked-Instrument-${activeInstrument}`, `ShakedInstrument`, `ShakedInstrument`)
+        Event(`Shaked-${activeInstrument.instrumentName}`, `Shaked`, `Shaked`)
         // playMaracas()
         window.navigator.vibrate(200);
 
@@ -176,7 +176,7 @@ export const ShakerView = () => {
 
 
     const handleClick = () => {
-        Event(`Clicked-Instrument-${activeInstrument}`, `ClickedInstrument`, `ClickedInstrument`)
+        Event(`Clicked-${activeInstrument.instrumentName}`, `Clicked`, `Clicked`)
         playMaracas()
         setButtonClicked(true)
         setTimeout(() => {

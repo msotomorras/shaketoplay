@@ -5,16 +5,15 @@ import './App.scss';
 
 function initializeReactGA() {
   ReactGA.initialize('UA-171702799-1');
-  ReactGA.pageview('/');
+  ReactGA.pageview(window.location.pathname + window.location.search);
 }
 
+initializeReactGA()
+
 const App = () => {
-  useEffect(() => {
-    initializeReactGA()
-  }, [])
   return (
     <div className="App">
-      <ShakerView/>
+      <ShakerView />
     </div>
   );
 }
