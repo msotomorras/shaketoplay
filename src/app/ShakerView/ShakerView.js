@@ -18,6 +18,7 @@ import firebase from 'firebase';
 import { firebaseConfig } from '../lib/firebaseConfig'
 
 import './ShakerView.scss';
+import { Button } from "../Button/Button";
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -193,16 +194,7 @@ export const ShakerView = () => {
     const randomRandomIndex = getRandomInstrument();
     return (
         <div className='ShakerView'>
-            <div
-                className={`buttonshaker ${buttonClicked && 'clicked'}`}
-                disabled={!isLoaded}
-                onMouseDown={() => setButtonClicked(true)}
-                onMouseUp={() => setButtonClicked(false)}
-                onClick={() => handleClick()}>
-                PLAY {instruments[index].instrumentName}
-                <br />
-                <img className='maracas' src={instruments[index].img} alt="Logo" />
-            </div>
+            <Button buttonClicked={buttonClicked} instrumentName={instruments[index].instrumentName} instrumentImgSrc={instruments[index].img} setButtonClicked={setButtonClicked} handleClick={handleClick}/>
             <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up. <br/>Tap button to start, shake to continue playing!</span>
             {showModal && renderModal2()}
         </div>
