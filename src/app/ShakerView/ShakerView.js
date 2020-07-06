@@ -73,11 +73,10 @@ export const ShakerView = () => {
     const [activeSample, setActiveSample] = useState('A1')
     const [index, setIndex] = useState(0)
 
-    const delayedQuery = useRef(_.debounce(() => playMaracas(), 50)).current;
+    const delayedQuery = useRef(_.debounce(() => playMaracas('shaked'), 50)).current;
 
     const getRandomInstrument = () => {
         const randomIndex = Math.floor(Math.random() * Math.floor(instruments.length));
-        console.log(randomIndex)
         return randomIndex
     }
 
@@ -106,7 +105,6 @@ export const ShakerView = () => {
     const askMotionPermissions = () => {
         // feature detect
         if (typeof DeviceMotionEvent.requestPermission === 'function') {
-            console.log('request permission')
             DeviceMotionEvent.requestPermission()
                 .then(permissionState => {
                     if (permissionState === 'granted') {
@@ -140,11 +138,7 @@ export const ShakerView = () => {
     }
 
     const handleAccelerated = (aX, aY, aZ) => {
-        console.log('ax', aX, aY, aZ);
-        console.log('PLAY!', activeInstrument.sample)
         delayedQuery()
-        Event(`Shaked-${activeInstrument.instrumentName}`, `Shaked`, `Shaked`)
-        // playMaracas()
         window.navigator.vibrate(200);
 
     }
@@ -176,8 +170,9 @@ export const ShakerView = () => {
 
 
     const handleClick = () => {
+        
         Event(`Clicked-${activeInstrument.instrumentName}`, `Clicked`, `Clicked`)
-        playMaracas()
+        playMaracas('clicked')
         setButtonClicked(true)
         setTimeout(() => {
             setButtonClicked(false)
@@ -188,16 +183,13 @@ export const ShakerView = () => {
         return index;
     }
 
-    const playMaracas = () => {
-        console.log('play instrument', activeInstrument, activeSample)
-        console.log('index', index)
+    const playMaracas = (type) => {
         const randomInstIndex = getRandomInstrument()
         setIndex(randomInstIndex)
-        console.log('random index', randomInstIndex)
         sampler.current.triggerAttack(instruments[randomInstIndex].sample)
+        Event(`${type}-${instruments[randomInstIndex].sample}`, `${type}`, `${type}`)
     }
 
-    console.log('instrument', activeInstrument)
     const randomRandomIndex = getRandomInstrument();
     return (
         <div className='ShakerView'>
