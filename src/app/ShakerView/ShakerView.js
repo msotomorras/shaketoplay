@@ -139,6 +139,7 @@ export const ShakerView = () => {
     }
 
     const handleAccelerated = (aX, aY, aZ) => {
+        console.log('accelerated!')
         delayedQuery()
         window.navigator.vibrate(200);
 
@@ -162,8 +163,6 @@ export const ShakerView = () => {
 
         var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
 
-        // console.log(aX, aY, aZ, 'modulo---', modulo)
-        // if (aX > 10)console.log('ax', aX, aY, aZ);
         if (modulo > 25 && modulo < 35) {
             handleAccelerated(aX, aY, aZ)
         }
@@ -171,7 +170,6 @@ export const ShakerView = () => {
 
 
     const handleClick = () => {
-        
         Event(`Clicked-${activeInstrument.instrumentName}`, `Clicked`, `Clicked`)
         playMaracas('clicked')
         setButtonClicked(true)
