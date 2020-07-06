@@ -162,7 +162,7 @@ export const ShakerView = () => {
         var aZ = e.accelerationIncludingGravity.z * 1;
 
         var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
-
+        console.log(aX, aY, aZ)
         if (modulo > 25 && modulo < 35) {
             handleAccelerated(aX, aY, aZ)
         }
