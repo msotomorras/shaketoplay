@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, PropTypes } from "react";
+import { Event } from '../lib/analytics'
 import { Sampler } from "tone";
 import A1 from "../../assets/maracas.mp3";
 import B1 from "../../assets/bongo.mp3";
@@ -142,6 +143,7 @@ export const ShakerView = () => {
         console.log('ax', aX, aY, aZ);
         console.log('PLAY!', activeInstrument.sample)
         delayedQuery()
+        Event(`Shaked-Instrument-${activeInstrument}`, `ShakedInstrument`, `ShakedInstrument`)
         // playMaracas()
         window.navigator.vibrate(200);
 
@@ -174,6 +176,7 @@ export const ShakerView = () => {
 
 
     const handleClick = () => {
+        Event(`Clicked-Instrument-${activeInstrument}`, `ClickedInstrument`, `ClickedInstrument`)
         playMaracas()
         setButtonClicked(true)
         setTimeout(() => {

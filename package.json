@@ -12,6 +12,7 @@
     "react": "^16.13.1",
     "react-accelerometer": "^1.0.1",
     "react-dom": "^16.13.1",
+    "react-ga": "^3.1.1",
     "react-motion": "^0.5.2",
     "react-scripts": "3.4.1",
     "react-tone": "^1.1.1",
