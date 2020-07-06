@@ -24,7 +24,7 @@ const withTracker = (WrappedComponent, options = {}) => {
 };
 
 export const Event = (category, action, label) => {
-    if (!category.includes('undefined')) {
+    if (!window.location.href.includes('localhost') && !category.includes('undefined')) {
         console.log('event fired', category)
         ReactGA.event({
             category: category,
@@ -32,9 +32,6 @@ export const Event = (category, action, label) => {
             label: label
         });
     }
-    // if (!window.location.href.includes('localhost') && window.location.href.includes('staging')) {
-        
-    // }
 };
 
 export default withTracker
