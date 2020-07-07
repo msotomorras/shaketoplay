@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ShakerView from './app/ShakerView/ShakerView'
 import ReactGA from 'react-ga';
 import './App.scss';

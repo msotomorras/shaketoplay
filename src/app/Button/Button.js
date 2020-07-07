@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, PropTypes } from "react";
+import React from "react";
 
 import './Button.scss';
 

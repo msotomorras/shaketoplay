@@ -1,29 +1,22 @@
-import React, { useState, useRef, useEffect, useCallback, PropTypes } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Event } from '../lib/analytics'
 import { Sampler } from "tone";
-import A1 from "../../assets/maracas.mp3";
-import B1 from "../../assets/bongo.mp3";
 import maracasImg from '../../assets/maracas1.png';
 import bongosImg from '../../assets/bongo1.png';
 import cymbalImg from '../../assets/cymbal.png';
 import snaredrumImg from '../../assets/snaredrum.png';
 import woodblockImg from '../../assets/woodblock.png';
 import tambourineImg from '../../assets/tambourine.png';
+import A1 from "../../assets/maracas.mp3";
+import B1 from "../../assets/bongo.mp3";
 import C1 from "../../assets/cymbal.wav";
 import F1 from "../../assets/woodblock1.wav";
 import D1 from "../../assets/snaredrum.mp3";
 import E1 from "../../assets/Tambourine.wav";
 import _ from "lodash";
-import firebase from 'firebase';
-import { firebaseConfig } from '../lib/firebaseConfig'
 
 import './ShakerView.scss';
 import { Button } from "../Button/Button";
-
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-
 
 const instruments = [
     {
@@ -63,15 +56,11 @@ const instruments = [
     },
 ]
 
-const sampleArray = ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'F1']
 export const ShakerView = () => {
-    const [isLoaded, setLoaded] = useState(false);
+    const [setLoaded] = useState(false);
     const sampler = useRef(null);
-    const [accelerated, setAccelerated] = useState(true)
     const [buttonClicked, setButtonClicked] = useState(false)
     const [showModal, setShowModal] = useState(true)
-    const [activeInstrument, setActiveInstrument] = useState({})
-    const [activeSample, setActiveSample] = useState('A1')
     const [index, setIndex] = useState(0)
     const [audioContextStarted, setAudioContextStarted] = useState(false)
 
@@ -82,10 +71,51 @@ export const ShakerView = () => {
         return randomIndex
     }
 
+    
+
     useEffect(() => {
         setIndex(getRandomInstrument)
-        // setActiveInstrument(instruments[index])
-        setActiveSample(activeInstrument.sample)
+
+        const isAccelerometer = () => {
+            if (window.DeviceMotionEvent === undefined) {
+                //No accelerometer is present. Use buttons. 
+                alert("no accelerometer");
+            }
+            else {
+                window.addEventListener("devicemotion", accelerometerUpdate, true);
+            }
+        }
+        
+        const accelerometerUpdate = (e) => {
+            var aX = e.accelerationIncludingGravity.x * 1;
+            var aY = e.accelerationIncludingGravity.y * 1;
+            var aZ = e.accelerationIncludingGravity.z * 1;
+    
+            const lowThres = 15;
+            const midThres = 25;
+            const midhighThres = 35;
+            const highThres = 50;
+    
+            var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
+            if (modulo > lowThres && modulo < midThres) {
+                console.log('soft shake')
+                Event(`SoftShake-${`${aX}-${aY}-${aZ}`}`, `SoftShake`, `SoftShake`)
+            }
+            if (modulo > midThres && modulo < midhighThres) {
+                handleAccelerated(aX, aY, aZ)
+            }
+            if (modulo > midhighThres && modulo < highThres) {
+                console.log('hard shake')
+                Event(`HardShake-${`${aX}-${aY}-${aZ}`}`, `HardShake`, `HardShake`)
+            }
+        }
+
+        const handleAccelerated = (aX, aY, aZ) => {
+            console.log('accelerated!')
+            delayedQuery()
+            window.navigator.vibrate(200);
+    
+        }
         sampler.current = new Sampler(
             {
                 A1,
@@ -102,7 +132,7 @@ export const ShakerView = () => {
             }
         ).toMaster();
         isAccelerometer()
-    }, []);
+    }, [setLoaded, delayedQuery]);
 
     const askMotionPermissions = () => {
         // feature detect
@@ -139,56 +169,20 @@ export const ShakerView = () => {
         )
     }
 
-    const handleAccelerated = (aX, aY, aZ) => {
-        console.log('accelerated!')
-        delayedQuery()
-        window.navigator.vibrate(200);
+    
 
-    }
+    
 
-    const isAccelerometer = () => {
-        if (window.DeviceMotionEvent == undefined) {
-            //No accelerometer is present. Use buttons. 
-            alert("no accelerometer");
-        }
-        else {
-            // alert("accelerometer found");
-            window.addEventListener("devicemotion", accelerometerUpdate, true);
-        }
-    }
-
-    const accelerometerUpdate = (e) => {
-        var aX = e.accelerationIncludingGravity.x * 1;
-        var aY = e.accelerationIncludingGravity.y * 1;
-        var aZ = e.accelerationIncludingGravity.z * 1;
-
-        var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
-        if (modulo > 15 && modulo < 20) {
-            console.log('soft shaked')
-            Event(`SoftShake-${aX, aY, aZ}`, `SoftShake`, `SoftShake`)
-        }
-        if (modulo > 25 && modulo < 35) {
-            handleAccelerated(aX, aY, aZ)
-        }
-        if (modulo > 25 && modulo < 50) {
-            console.log('hard shaked')
-            Event(`HardShake-${aX, aY, aZ}`, `HardShake`, `HardShake`)
-        }
-    }
+    
 
 
     const handleClick = () => {
         setAudioContextStarted(true)
-        Event(`Clicked-${activeInstrument.instrumentName}`, `Clicked`, `Clicked`)
         playMaracas('clicked')
         setButtonClicked(true)
         setTimeout(() => {
             setButtonClicked(false)
         }, 80);
-    }
-
-    const getIndex = () => {
-        return index;
     }
 
     const playMaracas = (type) => {
