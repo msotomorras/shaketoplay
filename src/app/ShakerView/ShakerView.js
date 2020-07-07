@@ -125,28 +125,15 @@ export const ShakerView = () => {
             const highThres = 65;
     
             var modulo = Math.sqrt(aX * aX + aY * aY + aZ * aZ)
-            if (modulo > lowThres && modulo < midThres) {
-                // console.log('soft shake')
-                Event(`SoftShake`, `SoftShake-${`${modulo}`}`, `SoftShake`)
-
-            }
+            
             if (modulo > midThres && modulo < midhighThres) {
                 handleAccelerated(aX, aY, aZ)
-            }
-            if (modulo > midhighThres && modulo < highThres) {
-                // console.log('hard shake')
-                Event(`HardShake`, `HardShake-${`${modulo}`}`, `HardShake`)
             }
         }
 
         const handleAccelerated = (aX, aY, aZ) => {
             console.log('accelerated!')
             delayedQuery()
-            const mainDirection = getAccDirection(aX, aY, aZ)
-            console.log('main direction---')
-            console.log('main direction---', mainDirection)
-            Event(`${mainDirection}-Direction`, `Direction`, `Direction`)
-            // window.navigator.vibrate(200);
         }
         
         isAccelerometer()
