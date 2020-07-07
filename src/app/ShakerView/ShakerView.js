@@ -71,10 +71,38 @@ export const ShakerView = () => {
         return randomIndex
     }
 
-    
+    const getAccDirection = (x,y,z) => {
+        console.log('getting main direction')
+        const nX = Number(x)
+        const nY = Number(y)
+        const nZ = Number(z)
+        if (nX > nY && nX> nZ) {
+            return 'X'
+        } else if (nY>nX && nY> nZ){
+            return 'Y'
+        } else {
+            return 'Z'
+        }
+    }
 
     useEffect(() => {
-        setIndex(getRandomInstrument)
+        setIndex(getRandomInstrument);
+
+        sampler.current = new Sampler(
+            {
+                A1,
+                B1,
+                C1,
+                D1,
+                E1,
+                F1
+            },
+            {
+                onload: () => {
+                    setLoaded(true);
+                }
+            }
+        ).toMaster();
 
         const isAccelerometer = () => {
             if (window.DeviceMotionEvent === undefined) {
@@ -91,46 +119,36 @@ export const ShakerView = () => {
             var aY = e.accelerationIncludingGravity.y * 1;
             var aZ = e.accelerationIncludingGravity.z * 1;
     
-            const lowThres = 15;
-            const midThres = 25;
-            const midhighThres = 35;
-            const highThres = 50;
+            const lowThres = 20;
+            const midThres = 30;
+            const midhighThres = 45;
+            const highThres = 65;
     
-            var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
+            var modulo = Math.sqrt(aX * aX + aY * aY + aZ * aZ)
             if (modulo > lowThres && modulo < midThres) {
-                console.log('soft shake')
-                Event(`SoftShake-${`${aX}-${aY}-${aZ}`}`, `SoftShake`, `SoftShake`)
+                // console.log('soft shake')
+                Event(`SoftShake`, `SoftShake-${`${modulo}`}`, `SoftShake`)
+
             }
             if (modulo > midThres && modulo < midhighThres) {
                 handleAccelerated(aX, aY, aZ)
             }
             if (modulo > midhighThres && modulo < highThres) {
-                console.log('hard shake')
-                Event(`HardShake-${`${aX}-${aY}-${aZ}`}`, `HardShake`, `HardShake`)
+                // console.log('hard shake')
+                Event(`HardShake`, `HardShake-${`${modulo}`}`, `HardShake`)
             }
         }
 
         const handleAccelerated = (aX, aY, aZ) => {
             console.log('accelerated!')
             delayedQuery()
-            window.navigator.vibrate(200);
-    
+            const mainDirection = getAccDirection(aX, aY, aZ)
+            console.log('main direction---')
+            console.log('main direction---', mainDirection)
+            Event(`${mainDirection}-Direction`, `Direction`, `Direction`)
+            // window.navigator.vibrate(200);
         }
-        sampler.current = new Sampler(
-            {
-                A1,
-                B1,
-                C1,
-                D1,
-                E1,
-                F1
-            },
-            {
-                onload: () => {
-                    setLoaded(true);
-                }
-            }
-        ).toMaster();
+        
         isAccelerometer()
     }, [setLoaded, delayedQuery]);
 
