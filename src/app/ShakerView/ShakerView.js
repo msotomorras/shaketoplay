@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, PropTypes } from "react";
 import { Event } from '../lib/analytics'
-import { Sampler } from "tone";
+import { Sampler, Tone } from "tone";
 import A1 from "../../assets/maracas.mp3";
 import B1 from "../../assets/bongo.mp3";
 import maracasImg from '../../assets/maracas1.png';
@@ -162,7 +162,6 @@ export const ShakerView = () => {
         var aZ = e.accelerationIncludingGravity.z * 1;
 
         var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
-        console.log(aX, aY, aZ)
         if (modulo > 25 && modulo < 35) {
             handleAccelerated(aX, aY, aZ)
         }
@@ -183,6 +182,9 @@ export const ShakerView = () => {
     }
 
     const playMaracas = (type) => {
+        if (Tone.context.state !== 'running') {
+            Tone.context.resume();
+        }
         const randomInstIndex = getRandomInstrument()
         setIndex(randomInstIndex)
         sampler.current.triggerAttack(instruments[randomInstIndex].sample)
@@ -192,8 +194,8 @@ export const ShakerView = () => {
     const randomRandomIndex = getRandomInstrument();
     return (
         <div className='ShakerView'>
-            <Button buttonClicked={buttonClicked} instrumentName={instruments[index].instrumentName} instrumentImgSrc={instruments[index].img} setButtonClicked={setButtonClicked} handleClick={handleClick}/>
-            <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up. <br/>Tap button to start, shake to continue playing!</span>
+            <Button buttonClicked={buttonClicked} instrumentName={instruments[index].instrumentName} instrumentImgSrc={instruments[index].img} setButtonClicked={setButtonClicked} handleClick={handleClick} />
+            <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up. <br />Tap button to start, shake to continue playing!</span>
             {showModal && renderModal2()}
         </div>
     );
