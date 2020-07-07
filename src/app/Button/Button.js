@@ -11,9 +11,9 @@ export const Button = ({buttonClicked, instrumentName, instrumentImgSrc, setButt
                 onMouseDown={() => setButtonClicked(true)}
                 onMouseUp={() => setButtonClicked(false)}
                 onClick={() => handleClick()}>
-                PLAY {instrumentName}
+                {instrumentName}
                 <br />
-                <img className='maracas' src={instrumentImgSrc} alt="Logo" />
+                {instrumentImgSrc && instrumentImgSrc.length > 0 && <img className='maracas' src={instrumentImgSrc} alt="Logo" />}
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, PropTypes } from "react";
 import { Event } from '../lib/analytics'
-import { Sampler, Tone } from "tone";
+import { Sampler } from "tone";
 import A1 from "../../assets/maracas.mp3";
 import B1 from "../../assets/bongo.mp3";
 import maracasImg from '../../assets/maracas1.png';
@@ -73,6 +73,7 @@ export const ShakerView = () => {
     const [activeInstrument, setActiveInstrument] = useState({})
     const [activeSample, setActiveSample] = useState('A1')
     const [index, setIndex] = useState(0)
+    const [audioContextStarted, setAudioContextStarted] = useState(false)
 
     const delayedQuery = useRef(_.debounce(() => playMaracas('shaked'), 50)).current;
 
@@ -162,13 +163,22 @@ export const ShakerView = () => {
         var aZ = e.accelerationIncludingGravity.z * 1;
 
         var modulo = Math.sqrt(aX * aX, aY * aY, aZ * aZ)
+        if (modulo > 15 && modulo < 20) {
+            console.log('soft shaked')
+            Event(`SoftShake-${aX, aY, aZ}`, `SoftShake`, `SoftShake`)
+        }
         if (modulo > 25 && modulo < 35) {
             handleAccelerated(aX, aY, aZ)
+        }
+        if (modulo > 25 && modulo < 50) {
+            console.log('hard shaked')
+            Event(`HardShake-${aX, aY, aZ}`, `HardShake`, `HardShake`)
         }
     }
 
 
     const handleClick = () => {
+        setAudioContextStarted(true)
         Event(`Clicked-${activeInstrument.instrumentName}`, `Clicked`, `Clicked`)
         playMaracas('clicked')
         setButtonClicked(true)
@@ -182,20 +192,18 @@ export const ShakerView = () => {
     }
 
     const playMaracas = (type) => {
-        if (Tone.context.state !== 'running') {
-            Tone.context.resume();
-        }
         const randomInstIndex = getRandomInstrument()
         setIndex(randomInstIndex)
         sampler.current.triggerAttack(instruments[randomInstIndex].sample)
         Event(`${type}-${instruments[randomInstIndex].instrumentName}`, `${type}`, `${type}`)
     }
 
-    const randomRandomIndex = getRandomInstrument();
+    
     return (
         <div className='ShakerView'>
-            <Button buttonClicked={buttonClicked} instrumentName={instruments[index].instrumentName} instrumentImgSrc={instruments[index].img} setButtonClicked={setButtonClicked} handleClick={handleClick} />
-            <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up. <br />Tap button to start, shake to continue playing!</span>
+            {!audioContextStarted && <Button buttonClicked={buttonClicked} instrumentName={'Start playing!'}  setButtonClicked={setButtonClicked} handleClick={handleClick}/>}
+            {audioContextStarted && <Button buttonClicked={buttonClicked} instrumentName={`Play ${instruments[index].instrumentName}`} instrumentImgSrc={instruments[index].img} setButtonClicked={setButtonClicked} handleClick={handleClick} />}
+            <span className='tip'><sup>*</sup>Turn on your sound and make sure your volume is up.</span>
             {showModal && renderModal2()}
         </div>
     );
