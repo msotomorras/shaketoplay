@@ -143,10 +143,8 @@ export const ShakerView = () => {
             console.log('accelerated!')
             delayedQuery()
             const mainDirection = getAccDirection(aX, aY, aZ)
-            console.log('main direction---')
             console.log('main direction---', mainDirection)
             Event(`${mainDirection}-Direction`, `Direction`, `Direction`)
-            // window.navigator.vibrate(200);
         }
         
         isAccelerometer()
